@@ -18,5 +18,16 @@ def register():
     return jsonify(sucess=True), 200
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    login_ = request.get_json()
+    email = login_['email']
+    password = login_['password']
+    if db.validate_user(email, password):
+        return jsonify(sucess=True), 200
+    else:
+        return jsonify(sucess=False), 400
+
+
 if __name__ == '__main__':
     app.run('0.0.0.0', debug=True)

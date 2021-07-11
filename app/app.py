@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request, jsonify
 import requests
-
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -9,6 +8,9 @@ user = {'firstName': 'firstName',
         'userName': 'userName',
         'email': 'email',
         'password': 'password'}
+
+login_ = {'email': 'email',
+          'password': 'password'}
 
 
 @app.route('/register', methods=['POST'])
@@ -26,17 +28,17 @@ def register():
         return jsonify(r.text), r.status_code
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    global login_
+    login_['email'] = request.form['email']
+    login_['password'] = request.form['password']
+    r = requests.post('http://user-service:5000/login', json=login_)
+    if r.status_code == 200:
+        return 'Login Success!', 200
+    else:
+        return f'Login Failed! User with email: {login_["email"]}, and password: {login_["password"]} does not exist', 200
 
-
-# @app.route('/login', methods=['POST'])
-# def login():
-#     email = request.form['email']
-#     password = request.form['password']
-#     if db.validate_user(email, password):
-#         return 'Login Success!', 200
-#     else:
-#         return f'Login Failed! User with email: {email}, and password: {password} does not exist', 200
-#
 
 @app.route('/login')
 def serve_login_page():
