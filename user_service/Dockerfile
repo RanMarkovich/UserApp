@@ -5,4 +5,4 @@ RUN apt-get install -y sqlite3 libsqlite3-dev
 RUN pip install flask
 COPY . .
 RUN sqlite3 database/user.db < database/scripts/scheme.sql
-CMD python app.py
+CMD python user_service.py
