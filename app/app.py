@@ -23,20 +23,20 @@ def register():
     if r.status_code == 200:
         return 'registered!', 200
     else:
-        return jsonify(r.json())
+        return jsonify(r.text), r.status_code
 
 
 
 
-@app.route('/login', methods=['POST'])
-def login():
-    email = request.form['email']
-    password = request.form['password']
-    if db.validate_user(email, password):
-        return 'Login Success!', 200
-    else:
-        return f'Login Failed! User with email: {email}, and password: {password} does not exist', 200
-
+# @app.route('/login', methods=['POST'])
+# def login():
+#     email = request.form['email']
+#     password = request.form['password']
+#     if db.validate_user(email, password):
+#         return 'Login Success!', 200
+#     else:
+#         return f'Login Failed! User with email: {email}, and password: {password} does not exist', 200
+#
 
 @app.route('/login')
 def serve_login_page():
