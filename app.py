@@ -1,20 +1,31 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+import requests
 
-from database.database import Database
 
 app = Flask(__name__)
-db = Database()
+
+user = {'firstName': 'firstName',
+        'lastName': 'lastName',
+        'userName': 'userName',
+        'email': 'email',
+        'password': 'password'}
 
 
 @app.route('/register', methods=['POST'])
 def register():
-    first_name = request.form['fname']
-    last_name = request.form['lname']
-    user_name = request.form['uname']
-    email = request.form['email']
-    password = request.form['password']
-    db.create_user(first_name, last_name, user_name, email, password)
-    return 'registered!', 200
+    global user
+    user['firstName'] = request.form['fname']
+    user['lastName'] = request.form['lname']
+    user['userName'] = request.form['uname']
+    user['email'] = request.form['email']
+    user['password'] = request.form['password']
+    r = requests.post('http://user-service:5000/register', json=user)
+    if r.status_code == 200:
+        return 'registered!', 200
+    else:
+        return jsonify(r.json())
+
+
 
 
 @app.route('/login', methods=['POST'])
