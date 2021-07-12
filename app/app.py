@@ -1,10 +1,12 @@
-import requests
 from flask import Flask, render_template, request, jsonify
 
 from data_generator import DataGenerator
+from services.transport import Transport
+
 
 app = Flask(__name__)
 data = DataGenerator()
+transport = Transport()
 
 
 @app.route('/register', methods=['POST'])
@@ -14,7 +16,7 @@ def register():
                      request.form['uname'],
                      request.form['email'],
                      request.form['password'])
-    r = requests.post('http://user-service:5000/register', json=user)
+    r = transport.register(user)
     if r.status_code == 200:
         return '<p>registered!</p>', 200
     elif r.status_code == 409:
@@ -27,7 +29,7 @@ def register():
 def login():
     login_ = data.login(request.form['email'],
                         request.form['password'])
-    r = requests.post('http://user-service:5000/login', json=login_)
+    r = transport.login(login_)
     if r.status_code == 200:
         return '<p>Login Success!</p>', 200
     else:
