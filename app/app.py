@@ -1,45 +1,38 @@
 import requests
 from flask import Flask, render_template, request, jsonify
 
+from data_generator import DataGenerator
+
 app = Flask(__name__)
-
-user = {'firstName': 'firstName',
-        'lastName': 'lastName',
-        'userName': 'userName',
-        'email': 'email',
-        'password': 'password'}
-
-login_ = {'email': 'email',
-          'password': 'password'}
+data = DataGenerator()
 
 
 @app.route('/register', methods=['POST'])
 def register():
-    global user
-    user['firstName'] = request.form['fname']
-    user['lastName'] = request.form['lname']
-    user['userName'] = request.form['uname']
-    user['email'] = request.form['email']
-    user['password'] = request.form['password']
+    user = data.user(request.form['fname'],
+                     request.form['lname'],
+                     request.form['uname'],
+                     request.form['email'],
+                     request.form['password'])
     r = requests.post('http://user-service:5000/register', json=user)
     if r.status_code == 200:
-        return 'registered!', 200
+        return '<p>registered!</p>', 200
     elif r.status_code == 409:
-        return f'registration failed! user with email: {user["email"]}, already exist!'
+        return f'<p>registration failed! user with email: {user["email"]}, already exist!</p>'
     else:
         return jsonify({'error': {'code': r.status_code, 'message': r.text}})
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    global login_
-    login_['email'] = request.form['email']
-    login_['password'] = request.form['password']
+    login_ = data.login(request.form['email'],
+                        request.form['password'])
     r = requests.post('http://user-service:5000/login', json=login_)
     if r.status_code == 200:
-        return 'Login Success!', 200
+        return '<p>Login Success!</p>', 200
     else:
-        return f'Login Failed! User with email: {login_["email"]}, and password: {login_["password"]} does not exist', 200
+        return f'<p>Login Failed! User with email: {login_["email"]}, ' \
+               f'and password: {login_["password"]} does not exist</p>', 200
 
 
 @app.route('/login')
