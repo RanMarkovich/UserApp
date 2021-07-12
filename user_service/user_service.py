@@ -14,8 +14,11 @@ def register():
     user_name = user['userName']
     email = user['email']
     password = user['password']
-    db.create_user(first_name, last_name, user_name, email, password)
-    return jsonify(sucess=True), 200
+    if not db.is_email_exit(email):
+        db.create_user(first_name, last_name, user_name, email, password)
+        return jsonify(sucess=True), 200
+    else:
+        return jsonify(sucess=False), 409
 
 
 @app.route('/login', methods=['POST'])

@@ -24,8 +24,10 @@ def register():
     r = requests.post('http://user-service:5000/register', json=user)
     if r.status_code == 200:
         return 'registered!', 200
+    elif r.status_code == 409:
+        return f'registration failed! user with email: {user["email"]}, already exist!'
     else:
-        return jsonify(r.text), r.status_code
+        return jsonify({'error': {'code': r.status_code, 'message': r.text}})
 
 
 @app.route('/login', methods=['POST'])

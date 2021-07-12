@@ -20,3 +20,10 @@ class Database:
         cursor.execute(f"SELECT Email, password FROM `user` WHERE `Email` = '{email}' AND `password` = '{password}'")
         results = cursor.fetchall()
         return True if len(results) > 0 else False
+
+    def is_email_exit(self, email):
+        connection = sqlite3.connect(self.location)
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT Email FROM `user` WHERE `Email` = '{email}'")
+        results = cursor.fetchall()
+        return True if len(results) > 0 else False
