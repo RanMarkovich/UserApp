@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 
-from data_generator import DataGenerator
+from data.data_generator import DataGenerator
 from services.transport import Transport
 
 

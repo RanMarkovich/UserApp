@@ -1,14 +1,19 @@
 from flask import Flask, request, jsonify
 
+from data.data_validator import DataValidator
 from database.database import Database
 
 app = Flask(__name__)
 db = Database()
+validator = DataValidator()
 
 
 @app.route('/register', methods=['POST'])
 def register():
     user = request.get_json()
+    validation = validator.validate_user_payload(user)
+    if not validation[0]:
+        return jsonify({'error': {'code': 400, 'message': validation[1].message}}), 400
     first_name = user['firstName']
     last_name = user['lastName']
     user_name = user['userName']
