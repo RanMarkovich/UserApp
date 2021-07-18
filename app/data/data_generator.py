@@ -1,11 +1,11 @@
 from copy import deepcopy
 
-from .common_functions import load_json_file
+from common_functions import load_json_file
 
 
 class DataGenerator:
-    _user_schema = load_json_file('../schemas/user.json')
-    _login_schema = load_json_file('../schemas/login.json')
+    _user_schema = load_json_file('user.json')
+    _login_schema = load_json_file('login.json')
 
     def user(self, f_name, l_name, username, email, password):
         user_schema = deepcopy(self._user_schema)
