@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Register Form</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
-<body>
 
-<h2>Register Form</h2>
+<body class="container">
 
-<form action="/register" method="POST">
-    <label for="fname">First name:</label><br>
-    <input type="text" id="fname" name="fname" value="John"><br><br>
-    <label for="lname">Last name:</label><br>
-    <input type="text" id="lname" name="lname" value="Doe"><br><br>
-    <label for="uname">User name:</label><br>
-    <input type="text" id="uname" name="uname" value="JohnDoe2021"><br><br>
-    <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" value="JohnDoe2021@gmail.com"><br><br>
-    <label for="password">Password:</label><br>
-    <input type="text" id="password" name="password" value="JohnDoe2021"><br><br>
-    <input type="submit" value="Register">
-</form>
+    <h1 style="font-size:40px">Registration</h1>
 
-<p>already have an account? please <a href="/login">Login</a></p>
-
+    <form action="/register" method="POST" onsubmit="return validateReg()">
+        <div class="area">
+            <input type="text" id="fname" name="fname" placeholder="First Name"><br>
+            <div id="message1" class="descript">Insert first name </div><br>
+        </div>
+        <div class="area">
+            <input type="text" id="lname" name="lname" placeholder="Last Name"><br>
+            <div id="message2" class="descript">Insert last name </div><br>
+        </div>
+        <div class="area">
+            <input type="text" id="uname" name="uname" placeholder="User Name"><br>
+            <div id="message3" class="descript">Insert username 2-8 characters </div><br>
+        </div>
+        <div class="area">
+            <input type="text" id="email" name="email" placeholder="Email"><br>
+            <div id="message4" class="descript">Insert valid email </div><br>
+        </div>
+        <div class="area">
+            <input type="text" id="password" name="password" placeholder="Password"><br>
+            <div id="message5" class="descript">Insert password 4-8 characters </div><br>
+        </div>
+        <input id="submitBTN" type="submit" value="Register">
+    </form>
+    <br>
+    <p>already have an account? please <a href="/login">Login</a></p>
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
 </body>
+
 </html>

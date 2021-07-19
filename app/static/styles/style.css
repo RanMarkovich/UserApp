@@ -1,0 +1,10 @@
+
+.container { min-width: 270px; width: 84%; margin-left: 8%; text-align: center; }
+.area { width: 50%; min-width: 260px; max-width: 480px; margin: auto; }
+input{ height: 28px; width: 100%; font-size: 20px; border: 2px solid rgb(162, 162, 248) }
+.descript { text-align: left; }
+#submitBTN { width: 150px; height: 30px; border: 2px solid rgba(0, 0, 0, 0.5); }
+p { display: inline-block;  margin-top: 0px;  margin-bottom: 0px; }
+.valid { color: green; }
+.invalid { color: red; }
+#goToRegister{ min-width: 272px; }
