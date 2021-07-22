@@ -1,6 +1,6 @@
 node {
     stage('checkout'){
-    git 'https://github.com/RanMarkovich/UserApp.git'
+        checkout scm
     }
     stage('build'){
         sh '''docker-compose up -d --build '''
