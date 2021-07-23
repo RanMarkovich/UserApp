@@ -9,34 +9,35 @@
 
 <body class="container">
 
-    <h1 style="font-size:40px">Registration</h1>
+<h1 style="font-size:40px">Registration</h1>
 
-    <form action="/register" method="POST" onsubmit="return validateReg()">
-        <div class="area">
-            <input type="text" id="fname" name="fname" placeholder="First Name"><br>
-            <div id="message1" class="descript">Insert first name </div><br>
-        </div>
-        <div class="area">
-            <input type="text" id="lname" name="lname" placeholder="Last Name"><br>
-            <div id="message2" class="descript">Insert last name </div><br>
-        </div>
-        <div class="area">
-            <input type="text" id="uname" name="uname" placeholder="User Name"><br>
-            <div id="message3" class="descript">Insert username 2-8 characters </div><br>
-        </div>
-        <div class="area">
-            <input type="text" id="email" name="email" placeholder="Email"><br>
-            <div id="message4" class="descript">Insert valid email </div><br>
-        </div>
-        <div class="area">
-            <input type="text" id="password" name="password" placeholder="Password"><br>
-            <div id="message5" class="descript">Insert password 4-8 characters </div><br>
-        </div>
-        <input id="submitBTN" type="submit" value="Register">
-    </form>
-    <br>
-    <p>already have an account? please <a href="/login">Login</a></p>
-    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+<form action="/register" method="POST" onsubmit="return isValidFields(5)">
+    <div class="area">
+        <input type="text" id="fname" name="fname" placeholder="First Name" oninput="regInputsHandler()"><br>
+        <div class="descript">Insert first name</div><p id="message1"></p><br><br>
+    </div>
+    <div class="area">
+        <input type="text" id="lname" name="lname" placeholder="Last Name" oninput="regInputsHandler()"><br>
+        <div class="descript">Insert last name</div><p id="message2"></p><br><br>
+    </div>
+    <div class="area">
+        <input type="text" id="uname" name="uname" placeholder="User Name" oninput="regInputsHandler()"><br>
+        <div class="descript">Insert username 2-8 characters</div><p id="message3"></p><br><br>
+    </div>
+    <div class="area">
+        <input type="text" id="email" name="email" placeholder="Email" oninput="regInputsHandler()"><br>
+        <div class="descript">Insert valid email</div><p id="message4"></p><br><br>
+    </div>
+    <div class="area">
+        <input type="text" id="password" name="password" placeholder="Password" oninput="regInputsHandler()"><br>
+        <div class="descript">Insert password 4-8 characters</div><p id="message5"></p><br><br>
+    </div>
+    <input class="submitBTN" type="submit" value="Register"><br>
+    <span class="span">check all fields</span>
+</form>
+<br>
+<p>already have an account? please <a href="/login">Login</a></p>
+<script src="{{ url_for('static', filename='js/script.js')}}"></script>
 </body>
 
 </html>

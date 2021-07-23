@@ -11,16 +11,17 @@
 
   <h1 style="font-size:40px">Login</h1>
 
-  <form action="/login" method="POST" onsubmit="return validateLogin()">
+  <form action="/login" method="POST" onsubmit="return isValidFields(2)">
     <div class="area">
-      <input type="text" id="email" name="email" placeholder="Email">
-      <div id="message6" class="descript">Insert Email </div><br>
+      <input type="text" id="email" name="email" placeholder="Email" oninput="loginInputsHandler()">
+      <div class="descript">Insert valid Email</div><p id="message6"></p><br><br>
     </div>
     <div class="area">
-      <input type="text" id="password" name="password" placeholder="Password">
-      <div id="message7" class="descript">Insert Password </div><br>
+      <input type="text" id="password" name="password" placeholder="Password" oninput="loginInputsHandler(event)">
+      <div class="descript">Insert password 4-8 characters</div><p id="message7"></p><br><br>
     </div>
-    <input id="submitBTN" type="submit" value="Login">
+    <input class="submitBTN" type="submit" value="Login"><br>
+    <span class="span">check all fields</span>
   </form>
   <br>
   <p id="goToRegister">don't have an account yet? please <a href="/register">Register</a></p>
