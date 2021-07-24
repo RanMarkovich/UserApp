@@ -1,5 +1,4 @@
-pipline {
-  agent any
+node {
     stage('checkout'){
         checkout scm
     }
