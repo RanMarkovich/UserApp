@@ -2,13 +2,13 @@ pipeline {
     agent { label 'master' }
     stages{
     stage('checkout'){
-        checkout scm
+        steps {checkout scm}
     }
     stage('build'){
-        sh '''docker-compose up -d --build '''
+        steps {sh '''docker-compose up -d --build '''}
     }
     stage('teardown'){
-        sh '''docker-compose down '''
+       steps { sh '''docker-compose down '''}
     }
   }
 }
