@@ -18,9 +18,10 @@ def register():
                      request.form['password'])
     r = transport.register(user)
     if r.status_code == 200:
-        return '<p>registered!</p>', 200
+        return render_template('messages.html', message='Register Success'), 200
     elif r.status_code == 409:
-        return f'<p>registration failed! user with email: {user["email"]}, already exist!</p>'
+        return render_template('messages.html', message=f'Registration failed!',
+                               details=f'user with email "{user["email"]}" already exist!'), 409
     else:
         return jsonify({'error': {'code': r.status_code, 'message': r.text}})
 
@@ -31,10 +32,10 @@ def login():
                         request.form['password'])
     r = transport.login(login_)
     if r.status_code == 200:
-        return '<p>Login Success!</p>', 200
+        return render_template('messages.html', message='Login Success'), 200
     else:
-        return f'<p>Login Failed! User with email: {login_["email"]}, ' \
-               f'and password: {login_["password"]} does not exist</p>', 200
+        return render_template('messages.html', message=f'Login Failed! check your details',
+                               details=f'Email: {login_["email"]} , Password: {login_["password"]}'), 200
 
 
 @app.route('/login')
