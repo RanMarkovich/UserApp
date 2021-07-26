@@ -1,0 +1,14 @@
+
+.container { min-width: 270px; width: 84%; margin-left: 8%; text-align: center; }
+.area { width: 50%; min-width: 260px; max-width: 480px; margin: auto; text-align: left; }
+input{ height: 28px; width: 100%; font-size: 20px; border: 2px solid rgb(162, 162, 248); margin-bottom:2px }
+.descript { display: inline-block; margin-right:8px;}
+p { display: inline-block; margin-top: 0px;  margin-bottom: 0px; }
+.valid { color: green; }
+.invalid { color: red; }
+.submitBTN { width: 150px; height: 32px; border: 2px solid rgba(0, 0, 0, 0.5); background-color: rgb(210 210 255); margin-botom: 5px }
+.submitBTN:active { border: 3px solid rgba(0, 0, 0, 0.5); background-color: rgb(190 190 255); }
+.span{ color: rgb(0 195 24);  visibility: hidden; }
+#goToRegister{ min-width: 272px; }
+
+

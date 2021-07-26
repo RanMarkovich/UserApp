@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Login Form</title>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
-<body>
 
-<h2>Login Form</h2>
+<body class="container">
 
-<form action="/login" method="POST">
-  <label for="email">Email:</label><br>
-  <input type="text" id="email" name="email" value="John"><br><br>
-  <label for="password">Password:</label><br>
-  <input type="text" id="password" name="password" value="Doe"><br><br>
-  <input type="submit" value="Login">
-</form>
+  <h1 style="font-size:40px">Login</h1>
 
-<p>don't have an account yet? please <a href="/register">Register</a></p>
+  <form action="/login" method="POST" onsubmit="return isValidFields(2)">
+    <div class="area">
+      <input type="text" id="email" name="email" placeholder="Email" oninput="loginInputsHandler()">
+      <div class="descript">Insert valid Email</div><p id="message6"></p><br><br>
+    </div>
+    <div class="area">
+      <input type="text" id="password" name="password" placeholder="Password" oninput="loginInputsHandler(event)">
+      <div class="descript">Insert password 4-8 characters</div><p id="message7"></p><br><br>
+    </div>
+    <input class="submitBTN" type="submit" value="Login"><br>
+    <span class="span">check all fields</span>
+  </form>
+  <br>
+  <p id="goToRegister">don't have an account yet? please <a href="/register">Register</a></p>
 
+  <script src="{{ url_for('static', filename='js/script.js')}}"></script>
 </body>
+
 </html>
