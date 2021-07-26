@@ -7,6 +7,7 @@ pipeline {
                 expression { GIT_BRANCH.startsWith('PR') == false }
                 expression { GIT_BRANCH != 'master' }
             }
+         }
         steps {checkout scm}
     }
     stage('build'){
