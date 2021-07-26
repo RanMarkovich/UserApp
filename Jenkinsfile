@@ -7,5 +7,5 @@ node {
     }
     stage('teardown'){
         sh '''docker-compose down '''
-}
+    }
 }
