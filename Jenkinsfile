@@ -5,7 +5,7 @@ pipeline {
             steps { checkout scm }
         }
         stage('prepare environment'){
-            steps { sh '''pip install -r tests/requirements.txt''' }
+            steps { sh '''pip3 install -r tests/requirements.txt''' }
         }
         stage('build'){
             steps {
