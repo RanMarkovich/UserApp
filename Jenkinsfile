@@ -4,6 +4,10 @@ pipeline {
         stage('checkout'){
             steps { checkout scm }
         }
+        {
+        stage('prepare environment'){
+            steps { sh '''pip install -r tests/requirements.txt''' }
+        }
         stage('build'){
             steps {
             script {
