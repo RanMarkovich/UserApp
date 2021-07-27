@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'master' }
-    stages{
+    stages {
         stage('checkout'){
             steps { checkout scm }
         }
@@ -25,5 +25,6 @@ pipeline {
         stage('teardown'){
            steps { sh '''docker-compose down '''}
       }
-   }
+    }
+  }
 }
