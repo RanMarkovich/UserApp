@@ -15,6 +15,9 @@ pipeline {
              }
            }
         }
+        stage('test'){
+            steps { sh '''pytest tests/user_app_tests/''' }
+        }
         stage('teardown'){
            steps { sh '''docker-compose down '''}
       }
