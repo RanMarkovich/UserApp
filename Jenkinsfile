@@ -12,13 +12,6 @@ pipeline {
                 docker { image 'jenkins/ssh-agent' }
             }
             steps {
-            script {
-                try {
-                    sh '''docker-compose up -d --build '''
-                } catch (err) {
-                    echo err.getMessage()
-               }
-             }
            }
         }
         stage('test'){
