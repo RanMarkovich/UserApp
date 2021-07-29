@@ -1,5 +1,4 @@
 pipeline {
-    agent { label 'master' }
     stages {
         stage('prepare environment'){
          agent {
