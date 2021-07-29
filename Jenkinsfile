@@ -5,7 +5,7 @@ pipeline {
          agent {
                 docker { image 'python:3.9' }
             }
-            steps { sh '''sudo pip3 install -r tests/requirements.txt''' }
+            steps { sh '''pip install -r tests/requirements.txt''' }
         }
         stage('build'){
                 agent {
