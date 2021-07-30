@@ -1,12 +1,6 @@
 pipeline {
     agent any
     stages {
-//         stage('prepare environment'){
-//          agent {
-//                 docker { image 'python:3.9-alpine' }
-//             }
-//             steps {  withEnv(["HOME=${env.WORKSPACE}"]) {sh '''pip install -r tests/requirements.txt''' }}
-//         }
         stage('build'){
             steps {
             script {
