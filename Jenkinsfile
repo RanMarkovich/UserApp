@@ -1,10 +1,10 @@
 pipeline {
-            agent {
-                docker { image 'python:3.9' }
-            }
+    agent any
     stages {
         stage('prepare environment'){
-
+         agent {
+                docker { image 'python:3.9' }
+            }
             steps {  withEnv(["HOME=${env.WORKSPACE}"]) {sh '''pip install -r tests/requirements.txt''' }}
         }
         stage('build'){
@@ -18,11 +18,11 @@ pipeline {
              }
            }
         }
-        stage('test'){
-            steps { sh '''pytest tests/user_app_tests/''' }
+       stage('test'){
+         agent {
+                docker { image 'python:3.9' }
+            }
+            steps {  withEnv(["HOME=${env.WORKSPACE}"]) {sh '''pytest tests/user_app_tests/''' }}
         }
-        stage('teardown'){
-           steps { sh '''docker-compose down '''}
-      }
     }
   }
