@@ -9,7 +9,7 @@ pipeline {
         }
         stage('build'){
                 agent {
-                docker { image 'jenkins/ssh-agent'}
+                docker { image 'jenkins/ssh-agent' args '-it --entrypoint=/bin/bash'}
             }
             steps {
                     sh '''docker-compose up -d --build '''
