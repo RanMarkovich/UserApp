@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('prepare environment'){
          agent {
-                docker { image 'python:3.9' }
+                docker { image 'python:3.9-alpine' }
             }
             steps {  withEnv(["HOME=${env.WORKSPACE}"]) {sh '''pip install -r tests/requirements.txt''' }}
         }
@@ -20,17 +20,24 @@ pipeline {
         }
        stage('test'){
            agent {
-                    docker { image 'python:3.9' }
+                    docker { image 'python:3.9-alpine' }
                 }
             steps { sh '''pytest tests/user_app_tests/''' }
         }
     }
     post {
         always {
-            sh '''docker-compose down'''
-            sh '''docker rm -f $(docker ps -a -q)'''
-            sh '''docker system prune -af'''
-            sh '''docker volume prune -f'''
+         script {
+                try {
+                    sh '''docker-compose down'''
+                    sh '''docker rm -f $(docker ps -a -q)'''
+                    sh '''docker system prune -af'''
+                    sh '''docker volume prune -f'''
+                } catch (err) {
+                    echo err.getMessage()
+               }
+             }
+
         }
     }
   }
