@@ -19,10 +19,12 @@ pipeline {
            }
         }
        stage('test'){
-         agent {
-                docker { image 'python:3.9' }
-            }
-            steps {  withEnv(["HOME=${env.WORKSPACE}"]) {sh '''pytest tests/user_app_tests/''' }}
+            steps { sh '''pytest tests/user_app_tests/''' }
+        }
+    }
+    post {
+        always {
+            sh '''docker-compose down'''
         }
     }
   }
