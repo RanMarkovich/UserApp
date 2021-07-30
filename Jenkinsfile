@@ -9,10 +9,10 @@ pipeline {
         }
         stage('build'){
                 agent {
-                docker { image 'jenkins/ssh-agent' reuseNode true}
+                docker { image 'jenkins/ssh-agent'}
             }
-            steps {
-                    sh '''docker-compose up -d --build '''
+            steps { withEnv(["HOME=${env.WORKSPACE}"])
+                    {sh '''docker-compose up -d --build '''}
            }
         }
         stage('test'){
