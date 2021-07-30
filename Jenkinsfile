@@ -19,12 +19,16 @@ pipeline {
            }
         }
        stage('test'){
+           agent {
+                    docker { image 'python:3.9' }
+                }
             steps { sh '''pytest tests/user_app_tests/''' }
         }
     }
     post {
         always {
             sh '''docker-compose down'''
+            sh '''docker rm -f $(docker ps -a -q)'''
             sh '''docker system prune -af'''
             sh '''docker volume prune -f'''
         }
