@@ -8,11 +8,14 @@ pipeline {
             steps {  withEnv(["HOME=${env.WORKSPACE}"]) {sh '''pip install -r tests/requirements.txt''' }}
         }
         stage('build'){
-                agent {
-                docker { image 'jenkins/ssh-agent'}
-            }
-            steps { withEnv(["HOME=${env.WORKSPACE}"])
-                    {sh '''docker-compose up -d --build '''}
+            steps {
+            script {
+                try {
+                    sh '''docker-compose up -d --build '''
+                } catch (err) {
+                    echo err.getMessage()
+               }
+             }
            }
         }
         stage('test'){
