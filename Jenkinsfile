@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'python:3.9-alpine' } }
+    agent { docker { image 'jenkins/ssh-agent' } }
     stages {
         stage('requirements') {
           steps {
