@@ -1,6 +1,11 @@
 pipeline {
-    agent any
+    agent { docker { image 'python:3.9-alpine' } }
     stages {
+        stage('requirements') {
+          steps {
+            sh 'pip install -r tests/requirements.txt'
+          }
+        }
         stage('build'){
             steps {
             script {
