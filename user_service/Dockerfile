@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y sqlite3 libsqlite3-dev
