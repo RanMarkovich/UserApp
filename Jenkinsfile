@@ -1,5 +1,6 @@
 pipeline {
     agent { label 'agent1' }
+    stages{
         stage('build'){
             steps {
             script {
@@ -15,4 +16,4 @@ pipeline {
            steps { sh '''docker-compose down '''}
       }
    }
-
+}
