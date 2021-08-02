@@ -1,7 +1,8 @@
 pipeline {
-    agent { label 'agent1' }
+    agent { label 'master' }
     stages{
         stage('build'){
+        agent { label 'agent1' }
             steps {
             script {
                 try {
@@ -13,6 +14,7 @@ pipeline {
            }
         }
         stage('teardown'){
+            agent { label 'agent1' }
            steps { sh '''docker-compose down '''}
       }
    }
