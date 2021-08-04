@@ -16,7 +16,7 @@ pipeline {
         stage('test'){
             agent { docker { image 'python:3.9-alpine' } }
             steps {
-                sh '''pip3 install -r tests/requirements.txt --user'''
+                sh '''sudo pip3 install -r tests/requirements.txt --user'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
             }
         }
