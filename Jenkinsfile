@@ -1,8 +1,7 @@
 pipeline {
-    agent none
+    agent { label 'master' }
     stages{
         stage('build'){
-            agent { label 'master' }
             steps {
             script {
                 try {
@@ -16,7 +15,7 @@ pipeline {
         stage('test'){
             agent { docker { image 'python:3.9' } }
             steps {
-                sh '''pip3 install -r tests/requirements.txt --user'''
+                sh '''python -m pip install --user tests/requirements.txt'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
             }
         }
