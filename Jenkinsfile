@@ -13,7 +13,7 @@ pipeline {
            }
         }
         stage('test'){
-            agent { docker { image 'python:3.9' } }
+            agent { docker { image 'qnib/pytest' } }
             steps {
                 sh '''sudo -H python -m pip install --user -r tests/requirements.txt'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
