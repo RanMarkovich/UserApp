@@ -23,6 +23,7 @@ pipeline {
       post {
         always {
             sh '''docker-compose down'''
+            sh '''docker rm -f $(docker ps -a -q)'''
         }
     }
 }//
