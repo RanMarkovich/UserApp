@@ -13,7 +13,7 @@ pipeline {
            }
         }
         stage('test'){
-            agent { docker { image 'qnib/pytest' } }
+            agent { docker { image 'qnib/pytest' reuseNode true } }
             steps {
                 sh '''pip install requests'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
