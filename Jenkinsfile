@@ -17,7 +17,7 @@ pipeline {
                         docker {
                             image 'qnib/pytest'
                             reuseNode true
-                            args "--network my_network"
+                            args "--network ${env.NETWORK_ID}"
                             }
                        }
             steps {
