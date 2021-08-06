@@ -15,7 +15,7 @@ pipeline {
         stage('test'){
             agent { docker { image 'qnib/pytest' } }
             steps {
-                sh '''sudo -H python -m pip install --user -r tests/requirements.txt'''
+                sh '''pip install requests'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
             }
         }
