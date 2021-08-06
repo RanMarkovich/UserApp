@@ -13,7 +13,13 @@ pipeline {
            }
         }
         stage('test'){
-            agent { docker { reuseNode true image 'ranmarkovich/agent-jenkins-docker-python:v1'} }
+            agent {
+                        docker {
+                            image 'qnib/pytest'
+                            reuseNode true
+                            args "--network my_network"
+                            }
+                       }
             steps {
                 sh '''pip install requests'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
