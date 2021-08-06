@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'master'  reuseNode true }
+    agent { label 'master'}
     stages{
         stage('build'){
             steps {
@@ -13,7 +13,7 @@ pipeline {
            }
         }
         stage('test'){
-            agent { docker { image 'qnib/pytest'} }
+            agent { docker { reuseNode true image 'qnib/pytest'} }
             steps {
                 sh '''pip install requests'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
