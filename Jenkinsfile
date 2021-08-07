@@ -17,11 +17,10 @@ pipeline {
                         docker {
                             image 'qnib/pytest'
                             reuseNode true
-                            args "--network user_app_multibranch_pr-23_my_network"
+                            args "--network user_app_multibranch_pr-${CHANGE_ID}_my_network"
                             }
                        }
             steps {
-                sh '''echo =============${CHANGE_ID}=================='''
                 sh '''pip install requests'''
                 sh '''pytest tests/user_app_tests/test_ping.py'''
             }
