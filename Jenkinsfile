@@ -29,6 +29,8 @@ pipeline {
       post {
         always {
             sh '''docker-compose down'''
+            sh '''docker system prune -af'''
+            sh '''docker volume prune -f'''
         }
     }
 }//
