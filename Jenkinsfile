@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'master' }
+    agent { label 'master'}
     stages{
         stage('build'){
             steps {
@@ -12,10 +12,25 @@ pipeline {
              }
            }
         }
+        stage('test'){
+            agent {
+                        docker {
+                            image 'qnib/pytest'
+                            reuseNode true
+                            args "--network user_app_multibranch_pr-${CHANGE_ID}_my_network"
+                            }
+                       }
+            steps {
+                sh '''pip install requests'''
+                sh '''pytest tests/user_app_tests/test_ping.py'''
+            }
+        }
       }
       post {
         always {
             sh '''docker-compose down'''
+            sh '''docker system prune -af'''
+            sh '''docker volume prune -f'''
         }
     }
-}//
+}
