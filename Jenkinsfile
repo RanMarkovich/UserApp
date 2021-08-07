@@ -17,7 +17,7 @@ pipeline {
                         docker {
                             image 'qnib/pytest'
                             reuseNode true
-                            args "--network user_app_multibranch_pr-${CHANGE_ID}_my_network"
+                            args "--network user_app_multibranch_${BRANCH_NAME}_my_network"
                             }
                        }
             steps {
