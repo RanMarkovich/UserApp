@@ -3,31 +3,26 @@ pipeline {
     stages{
         stage('build'){
             steps {
-            script {
-                try {
-                    sh '''docker-compose up -d --build '''
-                } catch (err) {
-                    echo err.getMessage()
-               }
-             }
-           }
+                sh '''docker-compose up -d --build'''
+            }
         }
         stage('test'){
             agent {
                         docker {
                             image 'qnib/pytest'
                             reuseNode true
-                            args "--network user_app_multibranch_${BRANCH_NAME}_my_network"
+                            args "--network my-network"
                             }
                        }
             steps {
                 sh '''pip install requests'''
-                sh '''pytest tests/user_app_tests/test_ping.py'''
+                sh '''pytest tests/user_app_tests/ --junit-xml=reports/tests.xml'''
             }
         }
       }
       post {
         always {
+            junit 'reports/*.xml '
             sh '''docker-compose down'''
             sh '''docker system prune -af'''
             sh '''docker volume prune -f'''
