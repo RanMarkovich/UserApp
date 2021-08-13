@@ -16,13 +16,13 @@ pipeline {
                        }
             steps {
                 sh '''pip install requests'''
-                sh '''pytest tests/user_app_tests/test_ping.py'''
+                sh '''pytest tests/user_app_tests/ --junit-xml=reports/tests.xml'''
             }
         }
       }
       post {
         always {
-//             junit 'reports/*.xml '
+            junit 'reports/*.xml '
             sh '''docker-compose down'''
             sh '''docker system prune -af'''
             sh '''docker volume prune -f'''
