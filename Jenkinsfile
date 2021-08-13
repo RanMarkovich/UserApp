@@ -28,6 +28,7 @@ pipeline {
       }
       post {
         always {
+            junit 'reports/*.xml '
             sh '''docker-compose down'''
             sh '''docker system prune -af'''
             sh '''docker volume prune -f'''
