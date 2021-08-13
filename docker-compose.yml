@@ -24,5 +24,6 @@ services:
 networks:
   my_network:
     external: false
+    name: my-network
 
 

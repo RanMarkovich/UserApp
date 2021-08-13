@@ -17,7 +17,7 @@ pipeline {
                         docker {
                             image 'qnib/pytest'
                             reuseNode true
-                            args "--network user_app_multibranch_${BRANCH_NAME}_my_network"
+                            args "--network my-network"
                             }
                        }
             steps {
@@ -28,7 +28,7 @@ pipeline {
       }
       post {
         always {
-            junit 'reports/*.xml '
+//             junit 'reports/*.xml '
             sh '''docker-compose down'''
             sh '''docker system prune -af'''
             sh '''docker volume prune -f'''
