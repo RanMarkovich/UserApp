@@ -3,14 +3,7 @@ pipeline {
     stages{
         stage('build'){
             steps {
-            script {
-                try {
-                    sh '''docker-compose up -d --build '''
-                } catch (err) {
-                    echo err.getMessage()
-               }
-             }
-           }
+                sh '''docker-compose up -d --build'''
         }
         stage('test'){
             agent {
