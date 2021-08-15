@@ -28,4 +28,4 @@ def browser_grid():
 def test_user_up_title(browser_grid):
     browser_grid.get('http://user-app:5000/login')
     act_title = browser_grid.title
-    assert act_title == 'Login Form', f"failed to get expected title, expected: 'Login Form', instead got: '{act_title}'"
+    assert act_title == 'Login Form'

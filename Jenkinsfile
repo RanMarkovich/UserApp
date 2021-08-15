@@ -24,7 +24,7 @@ pipeline {
                        }
                 steps {
                     sh '''pip install requests'''
-                    sh '''pytest tests/user_app_tests/ --junit-xml=reports/tests.xml'''
+                    sh '''pytest tests/backend_tests/user_app_tests/ --junit-xml=reports/tests.xml'''
                     }
                 }
         stage('UI Tests'){
