@@ -36,6 +36,7 @@ pipeline {
                             }
                        }
                       steps{
+                      sh '''pip install selenium'''
                       sh '''pytest tests/frontend_tests/ --junit-xml=reports/tests.xml'''
                     }
                 }
@@ -46,6 +47,8 @@ pipeline {
         always {
             junit 'reports/*.xml '
             sh '''docker-compose down'''
+            sh '''docker-compose -f tests/frontend_tests/docker-compose.yml down'''
+            sh '''docker network rm my-network'''
             sh '''docker system prune -af'''
             sh '''docker volume prune -f'''
         }
