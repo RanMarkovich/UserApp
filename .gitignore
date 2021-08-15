@@ -1,3 +1,4 @@
+tests/frontend_tests/chromedriver
 .idea/
 .venv/
 __pycache__/
