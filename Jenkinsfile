@@ -1,24 +1,46 @@
 pipeline {
     agent { label 'master'}
     stages{
-        stage('build'){
+        stage('Preparing Test Environment'){
+            steps {
+                sh '''docker network create my-network'''
+                sh '''docker-compose -f tests/frontend_tests/docker-compose.yml up -d'''
+            }
+        }
+        stage('Deploying Services'){
             steps {
                 sh '''docker-compose up -d --build'''
             }
         }
-        stage('test'){
-            agent {
+        stage('Testing'){
+        parallel {
+        stage('Backend Tests'){
+                agent {
                         docker {
                             image 'qnib/pytest'
                             reuseNode true
                             args "--network my-network"
                             }
                        }
-            steps {
-                sh '''pip install requests'''
-                sh '''pytest tests/user_app_tests/ --junit-xml=reports/tests.xml'''
+                steps {
+                    sh '''pip install requests'''
+                    sh '''pytest tests/user_app_tests/ --junit-xml=reports/tests.xml'''
+                    }
+                }
+        stage('UI Tests'){
+                agent {
+                        docker {
+                            image 'qnib/pytest'
+                            reuseNode true
+                            args "--network my-network"
+                            }
+                       }
+                      steps{
+                      sh '''pytest tests/frontend_tests/ --junit-xml=reports/tests.xml'''
+                    }
+                }
             }
-        }
+         }
       }
       post {
         always {
