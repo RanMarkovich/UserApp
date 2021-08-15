@@ -36,6 +36,7 @@ pipeline {
                             }
                        }
                       steps{
+                      sh '''pip install --upgrade pip'''
                       sh '''pip install selenium'''
                       sh '''pytest tests/frontend_tests/ --junit-xml=reports/tests.xml'''
                     }
