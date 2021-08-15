@@ -23,7 +23,7 @@ pipeline {
                             }
                        }
                 steps {
-                    sh '''pip install requests'''
+                    sh '''pip install -r tests/requirements.txt'''
                     sh '''pytest tests/backend_tests/user_app_tests/ --junit-xml=reports/tests.xml'''
                     }
                 }
@@ -36,7 +36,6 @@ pipeline {
                             }
                        }
                       steps{
-                      sh '''pip install --upgrade pip'''
                       sh '''pip install selenium'''
                       sh '''pytest tests/frontend_tests/ --junit-xml=reports/tests.xml'''
                     }
