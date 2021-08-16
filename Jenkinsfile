@@ -30,13 +30,12 @@ pipeline {
         stage('UI Tests'){
                 agent {
                         docker {
-                            image 'qnib/pytest'
+                            image 'benjose22/selenium_pytest_remote'
                             reuseNode true
                             args "--network my-network"
                             }
                        }
                       steps{
-                      sh '''pip install selenium'''
                       sh '''pytest tests/frontend_tests/ --junit-xml=reports/tests.xml'''
                     }
                 }
