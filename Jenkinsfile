@@ -23,7 +23,7 @@ pipeline {
                             }
                        }
                 steps {
-                    sh '''pip install -r tests/requirements.txt'''
+                    sh '''pip install requests'''
                     sh '''pytest tests/backend_tests/user_app_tests/ --junit-xml=reports/tests.xml'''
                     }
                 }

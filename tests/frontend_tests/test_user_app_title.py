@@ -17,7 +17,7 @@ def browser():
 @fixture
 def browser_grid():
     driver = webdriver.Remote(
-        command_executor='http://localhost:4444/wd/hub', desired_capabilities=DesiredCapabilities.CHROME
+        command_executor='http://hub:4444/wd/hub', desired_capabilities=DesiredCapabilities.CHROME
     )
     driver.maximize_window()
     driver.implicitly_wait(10)

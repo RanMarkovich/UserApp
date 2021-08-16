@@ -3,6 +3,7 @@ services:
 
   hub:
     image: selenium/hub
+    container_name: hub
     ports:
       - "4444:4444"
 
