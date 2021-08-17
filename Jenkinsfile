@@ -17,7 +17,7 @@ pipeline {
         stage('Backend Tests'){
                 agent {
                         docker {
-                            image 'qnib/pytest'
+                            image 'ranmarkovich/python_pytest_selenium'
                             reuseNode true
                             args "--network my-network"
                             }
@@ -30,7 +30,7 @@ pipeline {
         stage('UI Tests'){
                 agent {
                         docker {
-                            image 'benjose22/selenium_pytest_remote'
+                            image 'ranmarkovich/python_pytest_selenium'
                             reuseNode true
                             args "--network my-network"
                             }
