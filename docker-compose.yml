@@ -23,7 +23,7 @@ services:
 
 networks:
   my_network:
-    external: false
+    external: true
     name: my-network
 
 
