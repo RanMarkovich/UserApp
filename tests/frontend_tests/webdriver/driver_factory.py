@@ -4,11 +4,16 @@ from dataclasses import dataclass
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from tests.frontend_tests.webdriver.config import Config as WebDriverConfig
-
 
 @dataclass
-class DriverFactory(WebDriverConfig):
+class DriverFactory:
+    env: str
+
+    def __post_init__(self):
+        self.grid_executor_base_url = {
+            'local': 'http://localhost:4444/wd/hub',
+            'remote': 'http://hub:4444/wd/hub'
+        }[self.env]
 
     def init_driver(self):
         if self.env == 'local':

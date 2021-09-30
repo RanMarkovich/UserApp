@@ -1,9 +1,6 @@
-from pytest import fixture
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-
-from tests.frontend_tests.webdriver.driver_factory import DriverFactory
 
 
 # @fixture
@@ -26,8 +23,8 @@ from tests.frontend_tests.webdriver.driver_factory import DriverFactory
 #     driver.quit()
 
 
-def test_user_app_title(browser):
-    browser.get('http://user-app:5000/login')
+def test_user_app_title(browser, ui_conf):
+    browser.get(ui_conf.base_endpoint + '/login')
     WebDriverWait(browser, 30).until(
         EC.presence_of_element_located((By.TAG_NAME, "title"))
     )
