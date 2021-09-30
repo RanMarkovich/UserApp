@@ -23,7 +23,7 @@ pipeline {
                             }
                        }
                 steps {
-                    sh '''pytest tests/backend_tests/user_app_tests/ --junit-xml=reports/be_tests.xml'''
+                    sh '''pytest --env=remote tests/backend_tests/user_service/ --junit-xml=reports/be_tests.xml'''
                     }
                 }
         stage('UI Tests'){
@@ -35,7 +35,7 @@ pipeline {
                             }
                        }
                       steps{
-                      sh '''pytest tests/frontend_tests/ --junit-xml=reports/fe_tests.xml'''
+                      sh '''pytest --env=remote tests/frontend_tests/ --junit-xml=reports/fe_tests.xml'''
                     }
                 }
             }
