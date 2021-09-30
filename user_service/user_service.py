@@ -10,6 +10,11 @@ validator = DataValidator()
 data_generator = DataGenerator()
 
 
+@app.route('/ping')
+def ping():
+    return 'PONG', 200
+
+
 @app.route('/register', methods=['POST'])
 def register():
     user_payload = request.get_json()

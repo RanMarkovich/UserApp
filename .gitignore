@@ -1,4 +1,4 @@
-tests/frontend_tests/chromedriver
+tests/frontend_tests/webdriver/chromedriver
 tests/frontend_tests/.pytest_cache
 .idea/
 .venv/
