@@ -18,3 +18,7 @@ a sample of a successful run:
 
 The build status is reflected in the PR, like so:
 ![img_1.png](img_1.png)
+
+## Running Tests Locally:
+* Step 1: ```docker network create my-network && docker-compose up -d --build```
+* Step 2: ```pytest tests/fronend_tests/```
