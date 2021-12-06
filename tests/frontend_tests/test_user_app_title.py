@@ -1,12 +1,9 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+def test_login_with_non_existing_credentials(login_page, browser, ui_conf):
+    """
+    1. Opens login page
+    2. Tries to login with non-existing user credentials
+    3. Asserts Login Failed error message is present
+    """
 
-
-def test_user_app_title(browser, ui_conf):
-    browser.get(ui_conf.base_endpoint + '/login')
-    WebDriverWait(browser, 30).until(
-        EC.presence_of_element_located((By.TAG_NAME, "title"))
-    )
-    act_title = browser.title
-    assert act_title == 'Login Form'
+    login_page.login(ui_conf.user_email, ui_conf.user_password)
+    assert not login_page.is_logged_in()

@@ -21,4 +21,4 @@ The build status is reflected in the PR, like so:
 
 ## Running Tests Locally:
 * Step 1: ```docker network create my-network && docker-compose up -d --build```
-* Step 2: ```pytest tests/fronend_tests/```
+* Step 2: ```pytest tests/frontend_tests/test_user_app_title.py```

@@ -3,3 +3,5 @@ tests/frontend_tests/.pytest_cache
 .idea/
 .venv/
 __pycache__/
+tests/frontend_tests/geckodriver.log
+.DS_Store

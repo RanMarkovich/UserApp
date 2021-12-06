@@ -20,7 +20,7 @@ def register():
         if r.status_code == 200:
             return render_template('messages.html', message='Register Success'), 200
         elif r.status_code == 409:
-            return render_template('messages.html', message=f'Registration failed!',
+            return render_template('messages.html', message=f'Registration Failed!',
                                    details=f'user with email "{user["email"]}" already exist!'), 409
         else:
             return jsonify({'error': {'code': r.status_code, 'message': r.text}})
