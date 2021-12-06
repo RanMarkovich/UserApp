@@ -15,7 +15,7 @@ class DriverFactory:
     BROWSER: str = 'chrome'
 
     def __post_init__(self):
-        self.grid_executor_base_url = 'http://hub:4444/wd/hub'
+        self.grid_executor_base_url = 'http://localhost:4444/wd/hub'
 
     def init_driver(self):
         driver = None
@@ -45,4 +45,5 @@ class DriverFactory:
                                                                      StaleElementReferenceException,
                                                                      ElementClickInterceptedException)).until(f,
                                                                                                               "element not found on page")
+        driver.click_js = lambda el: driver.execute_script("arguments[0].click();", el)
         return driver

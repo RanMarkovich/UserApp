@@ -11,6 +11,10 @@ class BasePage(PageObject):
         self.driver.wait_until(lambda f: el.is_displayed())
         el.click()
 
+    def click_js(self, el: WebElement):
+        self.driver.wait_until(lambda f: el.is_displayed())
+        self.driver.click_js(el)
+
     def insert_text(self, text: str, el: WebElement):
         self.driver.wait_until(lambda f: el.is_displayed())
         el.send_keys(text)
