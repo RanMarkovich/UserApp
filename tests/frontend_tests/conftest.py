@@ -2,6 +2,7 @@ from pytest import fixture
 
 from tests.frontend_tests.config import UIConfig
 from tests.frontend_tests.pages.login_page import LoginPage
+from tests.frontend_tests.pages.pages import Pages
 from tests.frontend_tests.pages.registration_page import RegistrationPage
 from tests.frontend_tests.webdriver.driver_factory import DriverFactory
 
@@ -22,6 +23,11 @@ def login_page(browser, ui_conf):
 @fixture
 def registration_page(browser, ui_conf):
     return RegistrationPage(browser)
+
+
+@fixture
+def pages(browser):
+    return Pages(browser)
 
 
 @fixture
