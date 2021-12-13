@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, WebDriverException, \
     ElementNotInteractableException, StaleElementReferenceException, ElementClickInterceptedException
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
@@ -21,7 +22,7 @@ class DriverFactory:
         driver = None
         if self.BROWSER == 'chrome':
             if self.ENV == 'local':
-                driver = webdriver.Chrome(ChromeDriverManager().install())
+                driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
             elif self.ENV == 'remote':
                 driver = webdriver.Remote(
                     command_executor=self.grid_executor_base_url, desired_capabilities=DesiredCapabilities.CHROME

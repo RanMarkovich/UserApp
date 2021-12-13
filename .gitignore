@@ -5,3 +5,4 @@ tests/frontend_tests/.pytest_cache
 __pycache__/
 tests/frontend_tests/geckodriver.log
 .DS_Store
+reports/*
