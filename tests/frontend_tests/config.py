@@ -17,3 +17,4 @@ class UIConfig:
         self.first_name = 'ran'
         self.last_name = 'markovich'
         self.user_name = 'ranmarko'
+#
