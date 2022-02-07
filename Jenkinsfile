@@ -51,4 +51,4 @@ pipeline {
             sh '''docker volume prune -f'''
         }
     }
-} //trigger
+} //
