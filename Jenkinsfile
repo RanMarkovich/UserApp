@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'master'}
+    agent { label 'jenkins_slave_1'}
     stages{
         stage('Preparing Test Environment'){
             steps {
