@@ -44,6 +44,16 @@ pipeline {
       post {
         always {
             junit 'reports/*.xml '
+            script {
+                                try {
+                                  allure([
+                                      includeProperties: false,
+                                      jdk: '',
+                                      properties: [],
+                                      reportBuildPolicy: 'ALWAYS',
+                                      results: [[path: 'target/tests/reports/allure_results']]
+                                  ])
+                                } catch (Exception e) {}
             sh '''docker-compose down'''
             sh '''docker-compose -f tests/frontend_tests/docker-compose.yml down'''
             sh '''docker network rm my-network'''
