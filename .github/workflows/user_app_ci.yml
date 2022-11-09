@@ -13,12 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: build
+
     - uses: actions/checkout@v2
+    - name: build
       run: docker-compose up -d --build
 
-    - uses: actions/setup-python@v2
     - name: prepare test environment
+    - uses: actions/setup-python@v2
+
       run: |
           pip install pytest
           pip install requests
