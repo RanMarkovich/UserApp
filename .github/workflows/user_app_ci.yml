@@ -17,13 +17,14 @@ jobs:
     - name: build
     - uses: actions/checkout@v2
       run: docker-compose up -d --build
-
     - name: prepare test environment
     - uses: actions/setup-python@v2
       run: |
           pip install pytest
           pip install requests
-
     - name: test
-    - run: |
+      run: |
           pytest .\tests\backend_tests\
+    - name: clean
+      run: |
+        docker-compose down
