@@ -15,7 +15,7 @@ jobs:
     steps:
 
     - name: build
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       run: docker-compose up -d --build
 
     - name: prepare test environment
