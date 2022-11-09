@@ -25,5 +25,5 @@ jobs:
           pip install requests
 
     - name: test
-      run: |
+    - run: |
           pytest .\tests\backend_tests\
