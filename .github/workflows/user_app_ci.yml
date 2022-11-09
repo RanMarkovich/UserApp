@@ -27,7 +27,7 @@ jobs:
           pip install requests
 
     - name: test
-      run: pytest .\tests\backend_tests\
+      run: pytest tests/backend_tests/
 
     - name: clean
       run: docker-compose down
