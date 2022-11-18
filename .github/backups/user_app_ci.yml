@@ -10,7 +10,7 @@ jobs:
 
   user_app_ci:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
 
