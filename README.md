@@ -9,8 +9,30 @@ Written mostly in Python - The application contains two web-services:
 * **user-service**: handles the frontend requests and integrates with sql database for user data registration and login.
 * **user-app**: serves the html pages for registration and login, to send the user data to the user-service.
 
-## About the CI Infrastructure:
+## About CI Infrastructure:
 
+### New Version (Nov 2022):
+Migrated CI infrastructure from running on Jenkins to running on Github Actions using a self-hosted runner setup.
+
+**Importat:** this is against gh-actions best practices as this is a non-private repo, but it is for the sake of the practice!
+
+## Running Tests Locally:
+Prerequisites:
+* Installed and configured minikube + kubectl on your local machine
+
+Configure Action Runner Controller:
+* For a complete setup use [this guide](https://github.com/actions-runner-controller/actions-runner-controller)
+  * Once done, you will be able to see available runner in your repo settings - under `Actions -> Runners`
+* Create a `.github/workflows` dir in the root of your project
+* Create a `.yml` file under the workflows dir
+* Configure workflow to run on a self-hosted runner: <br>
+  `runs-on:`
+    <br>`self-hosted`
+
+a sample of a successful run:
+![img_3.png](img_3.png)
+
+### Old Version (Sep 2021):
 Using the Jenkins multibranch-pipeline, whenever a new remote branch is created (git push), the jenkins server receives a git webhook to initialize a build which would then build, run and test the application.
 
 a sample of a successful run:
