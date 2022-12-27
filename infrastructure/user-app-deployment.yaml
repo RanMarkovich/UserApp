@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\WINDOWS\system32\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: user-app
+  name: user-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: user-app
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\WINDOWS\system32\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/my-network: "true"
+        io.kompose.service: user-app
+    spec:
+      containers:
+        - image: user-app
+          name: user-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          resources: {}
+      restartPolicy: Always
+status: {}
