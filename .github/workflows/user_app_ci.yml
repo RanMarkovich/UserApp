@@ -1,3 +1,4 @@
+# documentation can be found at: https://minikube.sigs.k8s.io/docs/tutorials/setup_minikube_in_github_actions/
 name: User App CI
 
 on:
@@ -21,7 +22,7 @@ jobs:
       - name: Try the cluster !
         run: kubectl get pods -A
 
-      - name: Build image
+      - name: build image
         run: |
           export SHELL=/bin/bash
           eval $(minikube -p minikube docker-env)
@@ -34,6 +35,7 @@ jobs:
         run: |
           minikube image load user-app:latest
           minikube image load user-service:latest
+          minikube addons enable ingress
 
       - name: Deploy to minikube
         run: | 
@@ -42,10 +44,13 @@ jobs:
           kubectl apply -f infrastructure/user-app-service.yaml
           kubectl apply -f infrastructure/user-service-deployment.yaml
           kubectl apply -f infrastructure/user-service-service.yaml
+          kubectl apply -f infrastructure/ingress.yaml
+          
 
-      - name: Test service URLs
+      - name: Test user-app
         run: |
           minikube service list
-          minikube service example --url
+          echo "------------------ingress-nginx url------------------"
+          minikube service ingress-nginx-controller -n ingress-nginx --url
           echo "------------------opening the service------------------"
-          curl $(minikube service example --url)
+          curl $(minikube service ingress-nginx-controller -n ingress-nginx --url)/login
