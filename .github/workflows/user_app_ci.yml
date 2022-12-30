@@ -42,6 +42,7 @@ jobs:
           kubectl apply -f infrastructure/user-app-service.yaml
           kubectl apply -f infrastructure/user-service-deployment.yaml
           kubectl apply -f infrastructure/user-service-service.yaml
+          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
           kubectl apply -f infrastructure/ingress.yaml
           
 
