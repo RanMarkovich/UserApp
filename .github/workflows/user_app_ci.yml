@@ -48,6 +48,11 @@ jobs:
 
       - name: Test user-app
         run: |
+          echo "------------------wait for pods availability------------------"
+          export $user-app=(kubectl get pods --no-headers -o custom-columns=":metadata.name")[1]
+          export $user-service=(kubectl get pods --no-headers -o custom-columns=":metadata.name")[0]
+          kubectl wait --for=condition=Ready pod/$user-app
+          kubectl wait --for=condition=Ready pod/$user-service
           echo "------------------get pods------------------"
           kubectl get pods
           echo "------------------service list------------------"
