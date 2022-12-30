@@ -51,8 +51,7 @@ jobs:
           time: '15s'
 
       - name: Test user-app
-        uses: medyagh/setup-minikube@master
-      - run: |
+        run: |
           echo "------------------wait for pods availability------------------"
           kubectl wait --for=condition=Ready pod/$user-app
           kubectl wait --for=condition=Ready pod/$user-service
