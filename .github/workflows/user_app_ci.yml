@@ -31,10 +31,8 @@ jobs:
           echo -n "verifying images:"
           docker images
 
-      - name: Load images to minikube
+      - name: Enable Ingress
         run: |
-          minikube image load user-app:latest
-          minikube image load user-service:latest
           minikube addons enable ingress
 
       - name: Deploy to minikube
@@ -49,8 +47,11 @@ jobs:
 
       - name: Test user-app
         run: |
+          echo "------------------get pods------------------"
+          kubectl get pods
+          echo "------------------service list------------------"
           minikube service list
-          echo "------------------ingress-nginx url------------------"
-          minikube service ingress-nginx-controller -n ingress-nginx --url
-          echo "------------------opening the service------------------"
-          curl $(minikube service ingress-nginx-controller -n ingress-nginx --url)/login
+#          echo "------------------ingress-nginx url------------------"
+#          minikube service ingress-nginx-controller -n ingress-nginx --url
+#          echo "------------------opening the service------------------"
+#          curl $(minikube service ingress-nginx-controller -n ingress-nginx --url)/login
