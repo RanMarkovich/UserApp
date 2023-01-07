@@ -42,13 +42,13 @@ jobs:
       - name: Get pod name
         run: |
           sudo apt-get install jq
-          pod_name=$(kubectl get pods -l app=my-app -o json | jq -r '.items[0].metadata.name')
+          pod_name=$(kubectl get pods -l app=user-app -o json | jq -r '.items[0].metadata.name')
           echo "------------------pod name------------------"
           echo $pod_name
 
       - name: Wait for pod to be ready
         run: |
-          kubectl wait --for=condition=Ready pod/$pod_name -n my-namespace --timeout=60s
+          kubectl wait --for=condition=Ready pod/$pod_name -n default --timeout=60s
 
       - name: Port Forwarding
         run: |
