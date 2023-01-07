@@ -52,16 +52,14 @@ jobs:
 
       - name: Test user-app
         run: |
-          echo "------------------wait for pods availability------------------"
-          kubectl wait --for=condition=Ready pod/$user-app
-          kubectl wait --for=condition=Ready pod/$user-service
-          echo "------------------get pods------------------"
-          kubectl get pods
-          echo "------------------service list------------------"
-          minikube service list
+          echo "------------------running pods------------------"
+          echo $running-pods
+#          echo "------------------get pods------------------"
+#          kubectl get pods
+#          echo "------------------service list------------------"
+#          minikube service list
         env:
-          user-app: (kubectl get pods --no-headers -o custom-columns=":metadata.name")[0]
-          user-service: (kubectl get pods --no-headers -o custom-columns=":metadata.name")[1]
+          running-pods: (kubectl get pods --no-headers -o custom-columns=":metadata.name")
 #          echo "------------------ingress-nginx url------------------"
 #          minikube service ingress-nginx-controller -n ingress-nginx --url
 #          echo "------------------opening the service------------------"
