@@ -56,7 +56,7 @@ jobs:
           PORT_FORWARD_PID=$!
           
       - name: prepare test environment
-        uses: actions/setup-python@rev2
+        uses: actions/setup-python@v2
       - run: |
             pip install pytest
             pip install requests
