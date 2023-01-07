@@ -15,7 +15,7 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Start minikube
         uses: medyagh/setup-minikube@master
 
@@ -42,25 +42,21 @@ jobs:
           kubectl apply -f infrastructure/user-app-service.yaml
           kubectl apply -f infrastructure/user-service-deployment.yaml
           kubectl apply -f infrastructure/user-service-service.yaml
-          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-          kubectl apply -f infrastructure/ingress.yaml
 
-      - name: sleep for 15 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '15s'
-
-      - name: Test user-app
+      - name: Port Forwarding
         run: |
-          echo "------------------running pods------------------"
-          echo $running-pods
-#          echo "------------------get pods------------------"
-#          kubectl get pods
-#          echo "------------------service list------------------"
-#          minikube service list
-        env:
-          running-pods: (kubectl get pods --no-headers -o custom-columns=":metadata.name")
-#          echo "------------------ingress-nginx url------------------"
-#          minikube service ingress-nginx-controller -n ingress-nginx --url
-#          echo "------------------opening the service------------------"
-#          curl $(minikube service ingress-nginx-controller -n ingress-nginx --url)/login
+          kubectl port-forward deployment/user-app 5000:5000 &
+          PORT_FORWARD_PID=$!
+          
+      - name: prepare test environment
+        uses: actions/setup-python@v2
+      - run: |
+            pip install pytest
+            pip install requests
+
+      - name: test
+        run: pytest tests/backend_tests/
+
+      - name: Kill port forward process
+        run: |
+          kill $PORT_FORWARD_PID

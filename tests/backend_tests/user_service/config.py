@@ -7,6 +7,6 @@ class UserConf:
 
     def __post_init__(self):
         self.base_endpoint = {
-            'local': 'http://localhost:5001',
-            'remote': 'http://user-service:5000'
+            'local': 'http://localhost:5000',
+            'remote': 'http://localhost:5000'
         }[self.env]
