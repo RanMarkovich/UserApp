@@ -42,7 +42,7 @@ jobs:
       - name: Get pod name
         run: |
           sudo apt-get install jq
-          pod_name=$(kubectl get pods -l app=user-app -o json | jq -r '.items[0].metadata.name')
+          pod_name=$kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app
           echo "------------------pod name------------------"
           echo $pod_name
 
