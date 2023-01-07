@@ -31,10 +31,6 @@ jobs:
           echo -n "verifying images:"
           docker images
 
-      - name: Enable Ingress
-        run: |
-          minikube addons enable ingress
-
       - name: Deploy to minikube
         run: | 
           kubectl apply -f infrastructure/my_network-networkpolicy.yaml
@@ -43,13 +39,24 @@ jobs:
           kubectl apply -f infrastructure/user-service-deployment.yaml
           kubectl apply -f infrastructure/user-service-service.yaml
 
+      - name: Get pod name
+        run: |
+          sudo apt-get install jq
+          pod_name=$(kubectl get pods -l app=my-app -o json | jq -r '.items[0].metadata.name')
+          echo "------------------pod name------------------"
+          echo $pod_name
+
+      - name: Wait for pod to be ready
+        run: |
+          kubectl wait --for=condition=Ready pod/$pod_name -n my-namespace --timeout=60s
+
       - name: Port Forwarding
         run: |
           kubectl port-forward deployment/user-app 5000:5000 &
           PORT_FORWARD_PID=$!
           
       - name: prepare test environment
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@rev2
       - run: |
             pip install pytest
             pip install requests
