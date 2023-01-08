@@ -11,7 +11,18 @@ Written mostly in Python - The application contains two web-services:
 
 ## About CI Infrastructure:
 
-### New Version (Nov 2022):
+### New Version (Jan 2023):
+Migrated application infrastructure from docker-compose to kubernetes:
+CI Build and Tests steps are:
+1. Setting-up local K8s (minikube)
+2. Building + Deploying applications into local K8s (minikube)
+3. Forwarding Pod's port for testing in localhost env
+4. Testing application
+
+a sample of a successful run:
+![img_4.png](img_4.png)
+
+### Old Version (Nov 2022):
 Migrated CI infrastructure from running on Jenkins to running on Github Actions using a self-hosted runner setup.
 
 **Importat:** this is against gh-actions best practices as this is a non-private repo, but it is for the sake of the practice!
