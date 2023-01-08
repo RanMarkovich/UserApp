@@ -41,17 +41,15 @@ jobs:
 
       - name: Get pod name
         run: |
-          pod_name=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app)
           echo "------------------pod name------------------"
           echo $pod_name
-          echo "------------------pod name------------------"
-          echo "::set-env name=POD_NAME::$pod_name"
+          kubectl wait --for=condition=Ready pod/$$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app) -n default --timeout=60s
 
-      - name: Wait for pod to be ready
-        run: |
-          kubectl wait --for=condition=Ready pod/$POD_NAME -n default --timeout=60s
-        env:
-          POD_NAME: $ {{ env.POD_NAME }}
+#      - name: Wait for pod to be ready
+#        run: |
+#
+#        env:
+#          POD_NAME: $ {{ env.POD_NAME }}
 
       - name: Port Forwarding
         run: |
