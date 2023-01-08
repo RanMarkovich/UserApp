@@ -13,5 +13,5 @@ class UserTestHelper:
         self.base_endpoint = self.config.base_endpoint
 
     def ping(self):
-        r = requests.get(self.base_endpoint + '/ping')
+        r = requests.get(self.base_endpoint + '/login')
         return r
