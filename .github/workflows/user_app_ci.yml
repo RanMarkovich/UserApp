@@ -39,15 +39,13 @@ jobs:
           kubectl apply -f infrastructure/user-service-deployment.yaml
           kubectl apply -f infrastructure/user-service-service.yaml
 
-      - name: Get pod name
-        run: |
-          pod_name=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app)
-          echo "------------------pod name------------------"
-          echo $pod_name
-
       - name: Wait for pod to be ready
         run: |
+          echo "------------------pod name------------------"
+          echo $pod_name
           kubectl wait --for=condition=Ready pod/$pod_name -n default --timeout=60s
+        env:
+          pod_name: $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app)
 
       - name: Port Forwarding
         run: |
