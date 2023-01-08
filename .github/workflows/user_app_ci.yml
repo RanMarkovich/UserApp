@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "------------------pod name------------------"
           echo $pod_name
-          kubectl wait --for=condition=Ready pod/$$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app) -n default --timeout=60s
+          kubectl wait --for=condition=Ready pod/$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app) -n default --timeout=60s
 
 #      - name: Wait for pod to be ready
 #        run: |
