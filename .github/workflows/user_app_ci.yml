@@ -45,11 +45,6 @@ jobs:
           echo $pod_name
           kubectl wait --for=condition=Ready pod/$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app) -n default --timeout=60s
 
-#      - name: Wait for pod to be ready
-#        run: |
-#
-#        env:
-#          POD_NAME: $ {{ env.POD_NAME }}
 
       - name: Port Forwarding
         run: |
@@ -64,7 +59,3 @@ jobs:
 
       - name: test
         run: pytest tests/backend_tests/
-
-      - name: Kill port forward process
-        run: |
-          kill $PORT_FORWARD_PID
