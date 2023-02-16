@@ -29,15 +29,17 @@ jobs:
 #    - name: test
 #      run: pytest tests/backend_tests/
 
-    - name: Create Tag
-      run: |
-        TAG=$(date '+%Y%m%d-%H%M%S')
-        git tag $TAG
+    - name: Generate tag name
+      run: echo "TAG_NAME=v$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-    - name: Push Tag
-      run: |
-        echo $TAG
-        git push origin $TAG
+    - name: Create and push tag
+      uses: git-actions/create-tag@v1.3
+      with:
+        tag: ${{ env.TAG_NAME }}
+        message: "Release ${{ env.TAG_NAME }}"
+        ref: "refs/tags/${{ env.TAG_NAME }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: clean
       run: docker-compose down
