@@ -33,11 +33,27 @@ jobs:
       run: echo "TAG_NAME=v$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Create and push tag
-      uses: git-actions/create-tag@v1.3
+      id: create_tag
+      uses: actions/create-release@v1
       with:
+        tag_name: ${{ env.TAG_NAME }}
+        release_name: Release ${{ env.TAG_NAME }}
+        body: Release ${{ env.TAG_NAME }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get the tag SHA
+      id: tag_sha
+      run: echo ::set-output name=TAG_SHA::$(git rev-list -n 1 ${{ env.TAG_NAME }})
+
+    - name: Push tag to main branch
+      uses: git-actions/push-to-another-branch@v1
+      with:
+        branch: main
         tag: ${{ env.TAG_NAME }}
-        message: "Release ${{ env.TAG_NAME }}"
-        ref: "refs/tags/${{ env.TAG_NAME }}"
+        ref: ${{ steps.tag_sha.outputs.TAG_SHA }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
