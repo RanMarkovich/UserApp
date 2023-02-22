@@ -13,16 +13,18 @@ jobs:
       run: echo "date=$(date +'+%Y_%m_%d___%H_%M_%S')" >> $GITHUB_ENV
     - uses: actions/checkout@v3
       with:
-        ref: ${{ github.head_ref }}
+        ref: | 
+          ${{ github.head_ref }}
+          ${{ github.event.pull_request.head.sha }}
         fetch-depth: 0
+    - name: Get head git commit message
+      id: commit-msg
+      run: echo "commit-msg=$(git show -s --format=%s)" >> $GITHUB_ENV
     - name: Commit files
-      env:
-        COMMIT_MESSAGE: |
-          git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }}
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git tag -a ${{ env.date }} -m $COMMIT_MESSAGE
+        git tag -a ${{ env.date }} -m ${{ env.commit-msg }}
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
