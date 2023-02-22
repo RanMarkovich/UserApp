@@ -1,62 +1,25 @@
-name: User App CI
+name: Create Git Tag
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ '*' ]
+    branches: [ 'master' ]
 
 jobs:
-
-  user_app_ci:
-
+  create-git-tag:
     runs-on: ubuntu-latest
-
     steps:
-
-    - name: build
-      uses: actions/checkout@v2
-    - run: |
-          docker network create my-network
-#          docker-compose up -d --build
-#
-#    - name: prepare test environment
-#      uses: actions/setup-python@v2
-#    - run: |
-#          pip install pytest
-#          pip install requests
-#
-#    - name: test
-#      run: pytest tests/backend_tests/
-#
-
-    - name: Generate tag name
-      run: echo "TAG_NAME=v$(git rev-list --count HEAD)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
-    - name: Create and push tag
-      id: create_tag
-      uses: actions/create-release@v1
+    - uses: actions/checkout@v3
       with:
-        tag_name: ${{ env.TAG_NAME }}
-        release_name: Release ${{ env.TAG_NAME }}
-        body: Release ${{ env.TAG_NAME }}
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Get the tag SHA
-      id: tag_sha
-      run: echo ::set-output name=TAG_SHA::$(git rev-list -n 1 ${{ env.TAG_NAME }})
-
-    - name: Push tag to main branch
-      uses: git-actions/push-to-another-branch@v1
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
+    - name: Commit files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git tag -a "test_tag" -m "this is a test tag"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        branch: main
-        tag: ${{ env.TAG_NAME }}
-        ref: ${{ steps.tag_sha.outputs.TAG_SHA }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: clean
-      run: docker-compose down
+        force: true
+        tags: true
+        branch: ${{ github.ref }}
