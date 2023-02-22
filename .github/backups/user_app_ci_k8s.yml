@@ -1,0 +1,52 @@
+# documentation can be found at: https://minikube.sigs.k8s.io/docs/tutorials/setup_minikube_in_github_actions/
+name: User App CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+
+  user_app_ci:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+
+      - name: Deploying Services to K8s
+        run: |
+          echo "------------------ list all available pods ------------------"
+          kubectl get pods -A
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube docker-env)
+          docker build -t user-app ./app
+          docker build -t user-service ./user_service
+          echo -n "verifying images:"
+          docker images
+          echo "------------------ deploying to minikube ------------------"
+          kubectl apply -f infrastructure/my_network-networkpolicy.yaml
+          kubectl apply -f infrastructure/user-app-deployment.yaml
+          kubectl apply -f infrastructure/user-app-service.yaml
+          kubectl apply -f infrastructure/user-service-deployment.yaml
+          kubectl apply -f infrastructure/user-service-service.yaml
+          echo "------------------ waiting for pod availability ------------------"
+          echo $pod_name
+          kubectl wait --for=condition=Ready pod/$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep user-app) -n default --timeout=60s
+          echo "------------------ forwarding port for user-app ------------------"
+          kubectl port-forward deployment/user-app 5000:5000 &
+          PORT_FORWARD_PID=$!
+          
+      - name: Preparing Test Environment
+        uses: actions/setup-python@v2
+      - run: |
+            pip install pytest
+            pip install requests
+
+      - name: Test
+        run: pytest tests/backend_tests/
