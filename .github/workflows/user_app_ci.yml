@@ -22,4 +22,4 @@ jobs:
       with:
         force: true
         tags: true
-        branch: ${{ github.ref }}
+        branch: ${{ github.head_ref }}
