@@ -7,8 +7,13 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
 spec:
+  tls:
+  - hosts:
+    - user-app.com
+    secretName: user-app-secret-tls
   rules:
-    - http:
+    - host: user-app.com
+      http:
         paths:
           - backend:
               service:
