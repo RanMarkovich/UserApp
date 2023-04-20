@@ -1,15 +1,26 @@
 podTemplate(containers: [
-   containerTemplate(name: 'ui-api-tester', image: 'ranmarkovich/ui_api_tester:latest', command: 'sleep', args: '99d')
+    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:3107.v665000b_51092-5'),
+    containerTemplate(name: 'ui-api-tester', image: 'ranmarkovich/ui_api_tester:latest', command: 'sleep', args: '99d')
   ]) {
 
     node(POD_LABEL) {
-        stage('Run Python Version') {
-            container('ui-api-tester') {
-                stage('deploying services') {
+        stage('Build') {
+            container('jnlp') {
+                stage('Build a Maven project') {
                     sh '''
                       kubectl apply -f infrastructure/my_network-networkpolicy.yaml
                       kubectl apply -f infrastructure/user-service-deployment.yaml
                       kubectl apply -f infrastructure/user-service-service.yaml
+                    '''
+                }
+            }
+        }
+
+        stage('Test') {
+            container('ui-api-tester') {
+                stage('Test') {
+                    sh '''
+                    pytest tests/backend_tests/
                     '''
                 }
             }
