@@ -5,9 +5,11 @@ podTemplate(containers: [
     node(POD_LABEL) {
         stage('Run Python Version') {
             container('ui-api-tester') {
-                stage('check python version') {
+                stage('deploying services') {
                     sh '''
-                    python --version
+                      kubectl apply -f infrastructure/my_network-networkpolicy.yaml
+                      kubectl apply -f infrastructure/user-service-deployment.yaml
+                      kubectl apply -f infrastructure/user-service-service.yaml
                     '''
                 }
             }
