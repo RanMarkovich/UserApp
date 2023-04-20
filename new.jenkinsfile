@@ -1,0 +1,17 @@
+podTemplate(containers: [
+   containerTemplate(name: 'ui-api-tester', image: 'ranmarkovich/ui_api_tester:latest', command: 'sleep', args: '99d')
+  ]) {
+
+    node(POD_LABEL) {
+        stage('Run Python Version') {
+            container('ui-api-tester') {
+                stage('check python version') {
+                    sh '''
+                    python --version
+                    '''
+                }
+            }
+        }
+
+    }
+}
