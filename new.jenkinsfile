@@ -1,12 +1,12 @@
 podTemplate(containers: [
-    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:3107.v665000b_51092-5'),
+    containerTemplate(name: 'helm-kubectl', image: 'docker pull dtzar/helm-kubectl:3.11'),
     containerTemplate(name: 'ui-api-tester', image: 'ranmarkovich/ui_api_tester:latest', command: 'sleep', args: '99d')
   ]) {
 
     node(POD_LABEL) {
-        stage('Build') {
-            container('jnlp') {
-                stage('Build a Maven project') {
+        stage('Deploy') {
+            container('helm-kubectl') {
+                stage('Deploy User App') {
                     sh '''
                       kubectl apply -f infrastructure/my_network-networkpolicy.yaml
                       kubectl apply -f infrastructure/user-service-deployment.yaml
@@ -18,7 +18,7 @@ podTemplate(containers: [
 
         stage('Test') {
             container('ui-api-tester') {
-                stage('Test') {
+                stage('Test User App') {
                     sh '''
                     pytest tests/backend_tests/
                     '''
