@@ -1,5 +1,5 @@
 podTemplate(containers: [
-    containerTemplate(name: 'helm-kubectl', image: 'dtzar/helm-kubectl:3.11'),
+    containerTemplate(name: 'helm-kubectl', image: 'dtzar/helm-kubectl:3.11', command: 'sleep', args: '99d'),
     containerTemplate(name: 'ui-api-tester', image: 'ranmarkovich/ui_api_tester:latest', command: 'sleep', args: '99d')
   ]) {
 
