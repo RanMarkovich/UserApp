@@ -8,7 +8,7 @@ podTemplate(containers: [
             container('helm-kubectl') {
                 stage('Deploy User App') {
                     sh '''
-                      pwd
+                      ls -l
                     '''
                 }
             }
