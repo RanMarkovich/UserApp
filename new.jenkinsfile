@@ -8,7 +8,9 @@ podTemplate(containers: [
             container('helm-kubectl') {
                 stage('Deploy User App') {
                     sh '''
-                      ls -l
+                      kubectl apply -f infrastructure/my_network-networkpolicy.yaml
+                      kubectl apply -f infrastructure/user-service-deployment.yaml
+                      kubectl apply -f infrastructure/user-service-service.yaml
                     '''
                 }
             }
